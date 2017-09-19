@@ -12,8 +12,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @IBOutlet weak var tablething: UITableView!
     
-    var emojis = ["😍","💕","😘","🐾","🦊"]
-    var emotext = ["heart eyes","two hearts","kissing","paw prints","fox"]
+    var emojis:[Emoji] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +20,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tablething.dataSource = self
         tablething.delegate = self
+        emojis = makeEmojiArray()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -29,7 +29,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = emojis[indexPath.row]
+        let emoji = emojis[indexPath.row]
+        cell.textLabel?.text = emoji.icon
         return cell
     }
 
@@ -41,7 +42,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let DefVC = segue.destination as! DefinitionViewController
-        DefVC.emoji = sender as! String
+        DefVC.emoji = sender as! Emoji
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,6 +50,40 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
 
+    
+    func makeEmojiArray() -> [Emoji] {
+        let emoji1 = Emoji()
+        emoji1.icon = "😍"
+        emoji1.category = "People"
+        emoji1.year = 2011
+        emoji1.def = "Heart eyes"
+        
+        let emoji2 = Emoji()
+        emoji2.icon = "🦊"
+        emoji2.category = "Animals"
+        emoji2.year = 2016
+        emoji2.def = "Fox"
+        
+        let emoji3 = Emoji()
+        emoji3.icon = "💕"
+        emoji3.category = "Things"
+        emoji3.year = 2015
+        emoji3.def = "Two hearts"
+        
+        let emoji4 = Emoji()
+        emoji4.icon = "🐾"
+        emoji4.category = "Animals"
+        emoji4.year = 2011
+        emoji4.def = "Paw prints"
+        
+        let emoji5 = Emoji()
+        emoji5.icon = "😘"
+        emoji5.category = "People"
+        emoji5.year = 2011
+        emoji5.def = "Kissy face"
+        
+        return [emoji1,emoji2,emoji3,emoji4,emoji5]
+    }
 
 }
 
